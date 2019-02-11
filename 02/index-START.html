@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+
+<body>
+
+
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
+    </div>
+  </div>
+
+
+  <style>
+    html {
+      background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0, 0, 0, 0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px);
+      /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 50%;
+      height: 6px;
+      background: black;
+      position: absolute;
+      top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all(0.5);
+      transition-timing-function: ease-in-out;
+    }
+  </style>
+
+  <script>
+
+    //get current time in minutes, seconds, hours
+    const getTime = () => {
+
+      const currentTime = new Date();
+      const currentHours = currentTime.getHours();
+      const currentMinutes = currentTime.getMinutes();
+      const currentSeconds = currentTime.getSeconds();
+
+      //console.log(currentHours, currentMinutes, currentSeconds)
+
+      let currentHoursTwelve = currentHours > 12 ? currentHours - 12 : currentHours;
+      //console.log(currentHoursTwelve)
+
+      //originally offset by 90 degrees to start all hands at 12, need to adjust by 90 degrees
+      let hoursAngle = (currentHoursTwelve * 30) + 90;
+      let minutesAngle = (currentMinutes * 6) +90;
+      let secondsAngle = (currentSeconds * 6) + 90;
+
+      console.log(hoursAngle,minutesAngle,secondsAngle)
+
+      document.querySelector(".hour-hand").style.transform = `rotate(${hoursAngle}deg)`;
+
+      document.querySelector(".min-hand").style.transform = `rotate(${minutesAngle}deg)`
+      document.querySelector(".second-hand").style.transform = `rotate(${secondsAngle}deg)`;
+      //document.querySelector(".second-hand").rotate(`${secondssAngle}deg`);
+      //hours is 360 / 12 = 30 degrees per hour, 0.5 degrees per minute
+      //minutes is 360/60 = 6 degrees per minutes
+      // seconds is 360/60 = 6 degrees per second
+
+      //hours
+
+
+    }
+
+
+    setInterval(getTime, 1000)
+
+
+
+  </script>
+</body>
+
+</html>
